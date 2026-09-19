@@ -97,7 +97,6 @@ done
 # Determine base directories
 CONFIG_BASE="${PREFIX:-${XDG_CONFIG_HOME:-$HOME/.config}}"
 REPO_DIR="$CONFIG_BASE/opencode-config"
-LEGACY_REPO_DIR="$CONFIG_BASE/developer-config"
 OPENCODE_DIR="$CONFIG_BASE/opencode"
 
 say "Config base: $CONFIG_BASE"
@@ -120,28 +119,13 @@ if [ "$UNINSTALL" = "true" ]; then
   exit 0
 fi
 
-# Migrate clones created by versions published before the repository rename.
-if [ ! -e "$REPO_DIR" ] && [ -d "$LEGACY_REPO_DIR/.git" ]; then
-  legacy_origin="$(git -C "$LEGACY_REPO_DIR" remote get-url origin 2>/dev/null || true)"
-  case "$legacy_origin" in
-    https://github.com/cggherasim/developer-config.git|https://github.com/cggherasim/opencode-config.git|git@github.com:cggherasim/developer-config.git|git@github.com:cggherasim/opencode-config.git)
-      say "Migrating legacy clone from $LEGACY_REPO_DIR..."
-      run "mv '$LEGACY_REPO_DIR' '$REPO_DIR'"
-      if [ "$DRY_RUN" != "true" ]; then
-        run "git -C '$REPO_DIR' remote set-url origin '$REPO_URL'"
-      fi
-      ;;
-    *)
-      say "WARNING: $LEGACY_REPO_DIR exists but points to an unexpected remote; leaving it unchanged."
-      ;;
-  esac
-fi
-
 # Clone or update repository
 if [ -d "$REPO_DIR/.git" ]; then
   say "Updating existing clone..."
   run "git -C '$REPO_DIR' remote set-url origin '$REPO_URL'"
-  run "git -C '$REPO_DIR' fetch origin main && git -C '$REPO_DIR' checkout main && git -C '$REPO_DIR' pull --ff-only origin main"
+  run "git -C '$REPO_DIR' fetch origin main"
+  run "git -C '$REPO_DIR' checkout main"
+  run "git -C '$REPO_DIR' pull --ff-only origin main"
 else
   say "Cloning repository..."
   run "git clone --branch main --depth 1 '$REPO_URL' '$REPO_DIR'"
