@@ -78,6 +78,19 @@ Options:
   --help            Show usage
 ```
 
+## Branch
+
+The default branch of this repository is `main`. If your local clone still uses
+`master`, rename it:
+
+```bash
+git branch -m master main
+git fetch origin
+git branch -u origin/main main
+git remote set-head origin -a
+git push origin --delete master
+```
+
 ## Responsibilities
 
 Global files contain only preferences that should apply to every repository:
