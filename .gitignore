@@ -1,0 +1,25 @@
+# Secrets and local state
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+credentials*
+secrets*
+auth.json
+
+# OpenCode runtime state
+.opencode/
+.cache/
+logs/
+sessions/
+
+# OS and editor state
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.idea/
+.vscode/

@@ -1,0 +1,28 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "compaction": {
+    "auto": true,
+    "prune": true
+  },
+  "permission": {
+    "external_directory": "deny",
+    "bash": {
+      "*": "ask",
+      "git status*": "allow",
+      "git diff*": "allow",
+      "git log*": "allow",
+      "git show*": "allow",
+      "git branch --show-current*": "allow",
+      "npm run build*": "allow",
+      "npm run typecheck*": "allow",
+      "npm test*": "allow",
+      "npm run test*": "allow",
+      "npx cdk synth*": "allow",
+      "git push*": "ask",
+      "gh pr create*": "ask",
+      "npx cdk deploy*": "ask",
+      "npx cdk destroy*": "deny",
+      "aws *": "ask"
+    }
+  }
+}
