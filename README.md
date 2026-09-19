@@ -1,4 +1,4 @@
-# Developer configuration
+# OpenCode configuration
 
 Public, versioned configuration for OpenCode. Project-specific architecture,
 commands, and deployment rules remain in each application's own `AGENTS.md`.
@@ -19,18 +19,18 @@ opencode/
 On macOS or Linux with Git available:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/cggherasim/developer-config/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/cggherasim/opencode-config/main/install.sh | bash
 ```
 
 Or, if you prefer `wget`:
 
 ```bash
-wget -qO- https://raw.githubusercontent.com/cggherasim/developer-config/main/install.sh | bash
+wget -qO- https://raw.githubusercontent.com/cggherasim/opencode-config/main/install.sh | bash
 ```
 
 This will:
 
-- clone or update `cggherasim/developer-config` under your user config directory;
+- clone or update `cggherasim/opencode-config` under your user config directory;
 - create an `opencode/` directory under `$XDG_CONFIG_HOME` or `~/.config`;
 - symlink the shared `AGENTS.md`, `opencode.json`, and global review agents.
 
@@ -42,18 +42,18 @@ Clone the repository, then link the OpenCode files into the standard user
 configuration directory:
 
 ```bash
-git clone https://github.com/cggherasim/developer-config.git \
-  "$HOME/.config/developer-config"
+git clone https://github.com/cggherasim/opencode-config.git \
+  "$HOME/.config/opencode-config"
 
 mkdir -p "$HOME/.config/opencode/agents"
 
-ln -sfn "$HOME/.config/developer-config/opencode/AGENTS.md" \
+ln -sfn "$HOME/.config/opencode-config/opencode/AGENTS.md" \
   "$HOME/.config/opencode/AGENTS.md"
-ln -sfn "$HOME/.config/developer-config/opencode/opencode.json" \
+ln -sfn "$HOME/.config/opencode-config/opencode/opencode.json" \
   "$HOME/.config/opencode/opencode.json"
-ln -sfn "$HOME/.config/developer-config/opencode/agents/code-reviewer.md" \
+ln -sfn "$HOME/.config/opencode-config/opencode/agents/code-reviewer.md" \
   "$HOME/.config/opencode/agents/code-reviewer.md"
-ln -sfn "$HOME/.config/developer-config/opencode/agents/security-reviewer.md" \
+ln -sfn "$HOME/.config/opencode-config/opencode/agents/security-reviewer.md" \
   "$HOME/.config/opencode/agents/security-reviewer.md"
 ```
 
@@ -113,7 +113,7 @@ If you installed via the script, re-run it to pick up configuration changes.
 Otherwise, update manually:
 
 ```bash
-cd "$HOME/.config/developer-config"
+cd "$HOME/.config/opencode-config"
 git pull --ff-only
 ```
 
