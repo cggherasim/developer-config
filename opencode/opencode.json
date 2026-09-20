@@ -1,28 +1,108 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  "model": "opencode-go/kimi-k2.7-code",
+  "small_model": "opencode-go/glm-5.3-flash",
+  "default_agent": "build",
+  "subagent_depth": 1,
+  "share": "disabled",
+  "snapshot": true,
+  "autoupdate": true,
   "compaction": {
     "auto": true,
-    "prune": true
+    "prune": true,
+    "reserved": 12000
+  },
+  "watcher": {
+    "ignore": [
+      ".git/**",
+      "node_modules/**",
+      "dist/**",
+      "build/**",
+      "coverage/**",
+      "playwright-report/**",
+      "test-results/**",
+      "cdk.out/**",
+      ".cache/**"
+    ]
+  },
+  "agent": {
+    "build": {
+      "model": "opencode-go/kimi-k2.7-code",
+      "steps": 24,
+      "permission": {
+        "task": {
+          "*": "deny",
+          "explore": "allow",
+          "scout": "allow",
+          "code-reviewer": "allow",
+          "security-reviewer": "allow"
+        }
+      }
+    },
+    "plan": {
+      "model": "opencode-go/glm-5.3",
+      "steps": 12
+    },
+    "explore": {
+      "model": "opencode-go/glm-5.3-flash",
+      "steps": 8
+    },
+    "scout": {
+      "model": "opencode-go/glm-5.3-flash",
+      "steps": 8
+    },
+    "general": {
+      "model": "opencode-go/glm-5.3-flash",
+      "steps": 12
+    },
+    "code-reviewer": {
+      "model": "opencode-go/glm-5.3",
+      "steps": 12
+    },
+    "security-reviewer": {
+      "model": "opencode-go/glm-5.3",
+      "steps": 12
+    }
   },
   "permission": {
+    "read": {
+      "*": "allow",
+      ".env": "deny",
+      ".env.*": "deny",
+      "*.pem": "deny",
+      "*.key": "deny"
+    },
+    "edit": "allow",
     "external_directory": "deny",
+    "doom_loop": "ask",
+    "webfetch": "ask",
+    "websearch": "allow",
     "bash": {
       "*": "ask",
       "git status*": "allow",
       "git diff*": "allow",
       "git log*": "allow",
       "git show*": "allow",
+      "git grep*": "allow",
       "git branch --show-current*": "allow",
       "npm run build*": "allow",
       "npm run typecheck*": "allow",
+      "npm run typecheck:test*": "allow",
       "npm test*": "allow",
       "npm run test*": "allow",
       "npx cdk synth*": "allow",
-      "git push*": "ask",
-      "gh pr create*": "ask",
-      "npx cdk deploy*": "ask",
+      "rm -rf*": "deny",
+      "sudo *": "deny",
+      "git reset --hard*": "deny",
+      "git clean -f*": "deny",
+      "git checkout -- *": "deny",
+      "git restore *": "deny",
+      "git push --force*": "deny",
+      "git push -f*": "deny",
+      "git branch -D*": "deny",
       "npx cdk destroy*": "deny",
-      "aws *": "ask"
+      "aws s3 rm*": "deny",
+      "aws cloudformation delete-stack*": "deny"
     }
   }
 }
